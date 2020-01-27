@@ -2,28 +2,24 @@ import os
 from setuptools import setup, find_packages
 
 
-package_name = "{{package_name}}"
+package_name = "firestore_helper"
 
 
-python_requires = "{{USER_CODE}}"
-# Justifications:
-#   {{USER_CODE}}
+python_requires = ""
 
 
-dependency_links = {{USER_CODE}}
-# Justifications:
-#   {{USER_CODE}}
+dependency_links = []
 
 
-install_requires = {{USER_CODE}}
-# Justifications:
-#   {{USER_CODE}}
+install_requires = [
+    "click",
+    "firebase-admin"
+]
 
 
 entry_points = {
     'console_scripts': [
-        '{{package_name}} = {{package_name}}.__main__:{{package_name}}_cli',
-        {{USER_CODE}}
+        'firehelper = firestore_helper.__main__:fsync_cli'
     ],
     'gui_scripts': [
     ]

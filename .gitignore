@@ -125,3 +125,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Secrets
+secrets/
+
+# results files
+*.csv
+
+# visual studio code
+.vscode/

@@ -1,6 +1,6 @@
-# Templated package
+# Firestore helper tool
 
-Write a small description of the package.
+This tools allows to set and get collections from firestore thanks to csv files.
 
 ## Installation
 
@@ -9,7 +9,7 @@ Write a small description of the package.
 Install the package [from GitHub](https://pip.pypa.io/en/stable/reference/pip_install/#git).
 
 ```bash
-(venv) C:\Users\Adrien>pip install git+https://github.com/afaucon/templated_package.git@v0.0.1
+(venv) C:\Users\Adrien>pip install git+https://github.com/afaucon/firestore_helper.git@v0.0.1
 (venv) C:\Users\Adrien>pip list
 ```
 
@@ -18,8 +18,8 @@ Install the package [from GitHub](https://pip.pypa.io/en/stable/reference/pip_in
 Clone the package from GitHub and install it in editable mode (i.e. [setuptools "develop mode"](https://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode)).
 
 ```bash
-(venv) C:\Users\Adrien>git clone git+https://github.com/afaucon/templated_package.git
-(venv) C:\Users\Adrien>pip install --editable templated_package
+(venv) C:\Users\Adrien>git clone git+https://github.com/afaucon/firestore_helper.git
+(venv) C:\Users\Adrien>pip install --editable firestore_helper
 (venv) C:\Users\Adrien>pip list
 ```
 
@@ -28,26 +28,29 @@ Clone the package from GitHub and install it in editable mode (i.e. [setuptools 
 Within a python module:
 
 ```python
-import templated_package
+import firestore_helper
 
-templated_package.__author__
-templated_package.__version__
+firestore_helper.__author__
+firestore_helper.__version__
 ```
 
 ```python
-import templated_package.module
+import firestore_helper
 
-templated_package.service_1()
+key = os.environ.get('FIREBASE_ADMIN_KEY')
+db = firestore_helper.get_database(key, 'https://my_project.firebaseio.com')
+for document_name, content in firestore_helper.get_collection(db, collection_name):
+    print("{} => {}".format(document_name, content))
 ```
 
 With the command line interface:
 
 ```bash
-(venv) C:\Users\Adrien>python -m templated_package service_1
+(venv) C:\Users\Adrien>python -m firestore_helper get-coll --key secrets/firebase-admin-key.json users https://my_project.firebaseio.com
 ```
 
 Or directly:
 
 ```bash
-(venv) C:\Users\Adrien>templated_package service_1
+(venv) C:\Users\Adrien>firehelper get-coll --key secrets/firebase-admin-key.json users https://my_project.firebaseio.com
 ```
