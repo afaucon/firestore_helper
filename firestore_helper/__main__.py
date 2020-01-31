@@ -47,6 +47,9 @@ def set_coll(database_url, key, collection_name):
     csv_table_reader = firestore_helper.TableReader(csv_filename)
     for item in csv_table_reader.read_item():
         document_name = item.pop('id')
+        for key in list(item):
+            if item[key] == '':
+                del item[key]
         firestore_helper.set_document(db, collection_name, document_name, item)
 
 
@@ -72,12 +75,18 @@ def get_coll(database_url, key, collection_name):
     csv_filename = collection_name + '.csv'
     csv_table_writer = None
         
-    for document_name, content in firestore_helper.get_collection(db, collection_name):
-        if csv_table_writer is None:
-            fieldnames = ['id'] + list(content.keys())
-            csv_table_writer = firestore_helper.TableWriter(csv_filename, fieldnames)
-        content['id'] = document_name
-        csv_table_writer.write_item(content)
+    table = []
+    fieldnames = ['id']
+    for document_name, item in firestore_helper.get_collection(db, collection_name):
+        for key in item.keys():
+            if key not in fieldnames:
+                fieldnames.append(key)
+        item['id'] = document_name
+        table.append(item)
+
+    csv_table_writer = firestore_helper.TableWriter(csv_filename, fieldnames)
+    for item in table:
+        csv_table_writer.write_item(item)
 
 
     
